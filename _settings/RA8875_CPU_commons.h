@@ -22,7 +22,7 @@ Part of RA8875 library from https://github.com/sumotoy/RA8875
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-/* 
+/*
 --------------------------------------------------------------
 			ENERGIA BASED BOARDS
 	Partially supported and actually never tested
@@ -47,8 +47,20 @@ Part of RA8875 library from https://github.com/sumotoy/RA8875
 	#endif
 	static uint8_t SPImodule;
 	static uint8_t SPDR;
+#elif defined(SPARK)
+	/*
+	--------------------------------------------------------------
+				Particle Photon BOARDS
+	--------------------------------------------------------------
+	*/
+		#include "application.h"
+		#define SPI_HAS_TRANSACTION 1
+		#if defined(_FORCE_PROGMEM__)
+			#undef _FORCE_PROGMEM__
+		#endif
+		#define __PRGMTAG_
 #elif defined(__AVR__)
-/* 
+/*
 --------------------------------------------------------------
 			8 BIT AVR BOARDS (UNO,YUN,LEONARDO,ETC.)
 	Fully supported (tested)
@@ -62,7 +74,7 @@ Part of RA8875 library from https://github.com/sumotoy/RA8875
 	#include <math.h>
 	#include <avr/pgmspace.h>
 #elif defined(__MK20DX128__) || defined(__MK20DX256__) || defined(__MKL26Z64__)
-/* 
+/*
 --------------------------------------------------------------
 			TEENSY 3, TEENSY 3.1, TEENSY 3.2, TEENSY LC
 	Fully supported (tested)
@@ -76,9 +88,9 @@ Part of RA8875 library from https://github.com/sumotoy/RA8875
 		#undef _FORCE_PROGMEM__
 		#define PROGMEM __attribute__((section(".progmem.data")))
 	#endif
-	#define __PRGMTAG_	
+	#define __PRGMTAG_
 #elif defined(__32MX320F128H__) || defined(__32MX795F512L__) //chipkit uno, chipkit max
-/* 
+/*
 --------------------------------------------------------------
 			CHIPKIT UNO, CHIPKIT MAX
 	Partially supported and never tested
@@ -96,9 +108,9 @@ Part of RA8875 library from https://github.com/sumotoy/RA8875
 	  #define pgm_read_byte(addr) (*(const unsigned char *)(addr))
 	  #define pgm_read_word(addr) (*(const unsigned short *)(addr))
 	#endif
-	#define __PRGMTAG_	
+	#define __PRGMTAG_
 #elif defined (__arm__) && defined(_VARIANT_ARDUINO_DUE_X_)
-/* 
+/*
 --------------------------------------------------------------
 			ARDUINO DUE
 	Fully supported (tested)
@@ -116,9 +128,9 @@ Part of RA8875 library from https://github.com/sumotoy/RA8875
 	  #define pgm_read_byte(addr) (*(const unsigned char *)(addr))
 	  #define pgm_read_word(addr) (*(const unsigned short *)(addr))
 	#endif
-	#define __PRGMTAG_	
+	#define __PRGMTAG_
 #elif defined (__arm__) && defined(__SAM3X8E__)
-/* 
+/*
 --------------------------------------------------------------
 			ARDUINO DUE COMPATIBLE
 	Fully supported (as DUE, tested)
@@ -136,21 +148,21 @@ Part of RA8875 library from https://github.com/sumotoy/RA8875
 	  #define pgm_read_byte(addr) (*(const unsigned char *)(addr))
 	  #define pgm_read_word(addr) (*(const unsigned short *)(addr))
 	#endif
-#elif defined(STM32F2XX) || defined(STM32F10X_MD) || defined(STM32_SERIES_F1) || defined(STM32_SERIES_F2)
-/* 
---------------------------------------------------------------
-			STM32 BOARDS
-	Initial support and actually won't compile
---------------------------------------------------------------
-*/
-	#define ___STM32STUFF
-	#include "Arduino.h"
-	#if defined(_FORCE_PROGMEM__)
-		#undef _FORCE_PROGMEM__
-	#endif
-	#define __PRGMTAG_	
+	#elif defined(STM32F2XX) || defined(STM32F10X_MD) || defined(STM32_SERIES_F1) || defined(STM32_SERIES_F2)
+	/*
+	--------------------------------------------------------------
+				STM32 BOARDS
+		Initial support and actually won't compile
+	--------------------------------------------------------------
+	*/
+		#define ___STM32STUFF
+		#include "Arduino.h"
+		#if defined(_FORCE_PROGMEM__)
+			#undef _FORCE_PROGMEM__
+		#endif
+		#define __PRGMTAG_
 #elif defined(__arm__) && !defined(__XTENSA__) && !defined(___TEENSYES)
-/* 
+/*
 --------------------------------------------------------------
 			ARM generic
 	Mistery....
@@ -160,10 +172,10 @@ Part of RA8875 library from https://github.com/sumotoy/RA8875
 		#undef _FORCE_PROGMEM__
 	#endif
 	#include "Arduino.h"
-	#define __PRGMTAG_	
+	#define __PRGMTAG_
 	#warning "Generic Arm detected, not sure if your board it's compatible!"
 #elif defined(__XTENSA__)
-/* 
+/*
 --------------------------------------------------------------
 			XTENSA (ESP)
 	It compiles but never tested
@@ -174,7 +186,7 @@ Part of RA8875 library from https://github.com/sumotoy/RA8875
 		#undef _FORCE_PROGMEM__
 		#define PROGMEM __attribute__((section(".progmem.data")))
 	#endif
-	#define __PRGMTAG_	
+	#define __PRGMTAG_
 #else
 	#error "your board it's not supported yet!"
 #endif

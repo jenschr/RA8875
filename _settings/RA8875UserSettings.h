@@ -21,12 +21,12 @@ License:GNU General Public License v3.0
 #ifndef _RA8875USERSETTINGS_H_
 #define _RA8875USERSETTINGS_H_
 /* ---------------------------- USER SETTINGS --------------------------------------*/
-/* [RENDER TEXT OPTIMIZATIONS] +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+/* [RENDER TEXT OPTIMIZATIONS] +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 From 0.70b11 the Font Rendering Engine has some optimizations for render font faster but this require much more code.
 Not all users need this so you can select if include Render Text Optimizations or not by comment the following line. */
 #define _RA8875_TXTRNDOPTIMIZER								// [default uncommented]
 
-/* [VISUALIZE RENDER TEXT OPTIMIZATIONS - >>> ONLY FOR DEBUG <<<] +++++++++++++++++++++++++++++++++++++++ 
+/* [VISUALIZE RENDER TEXT OPTIMIZATIONS - >>> ONLY FOR DEBUG <<<] +++++++++++++++++++++++++++++++++++++++
 The Text Render optimizations introduced in b11 it's the result of testing several algorithms so it's in continue evolution.
 RA8875_VISPIXDEBUG force the rendering engine to show how the font it's rendered (Only for debug!!!).
 RA8875_TXTBENCH enable the font rendering engine to measure the time  (Only for debug!!!), this
@@ -36,7 +36,7 @@ option works ONLY when  RA8875_VISPIXDEBUG it's uncommented or values are falsed
 
 /* [USE_RA8875_SEPARATE_TEXT_COLOR] +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 RA8875 chip set color globally, this mean that if you set text color white and after you create
-a red circle, every text after that will result red text. 
+a red circle, every text after that will result red text.
 Enabling this feature your text will always maintain the choosed color. */
 #define USE_RA8875_SEPARATE_TEXT_COLOR 						// [default uncommented]
 
@@ -48,7 +48,7 @@ This option will slow down a bit the text rendering (just a bit) */
 
 /* [DISABLE ALL TOUCH SCREEN LIBRARY CAPABILITIES AND RELATIVE CODE] +++++++++++++++++++++++++++++++++++++++
 If your project don't need Touch Screen or you choosed to use an external library you can comment out
-the following line and ALL resources related will not loaded at all. 
+the following line and ALL resources related will not loaded at all.
 If this is uncommented the CHOOSE YOUR TOUCH SCREEN TYPE has no effect. */
 //#define _AVOID_TOUCHSCREEN 								// [default commented]
 
@@ -90,9 +90,9 @@ Nothing special here, you can set the default blink rate */
 /* [DEFAULT INTERNAL FONT ENCODING] ++++++++++++++++++++++++++++++++++++++++++++++++++
 RA8875 has 4 different font set, same shape but suitable for most languages
 please look at RA8875 datasheet and choose the correct one for your language!
-ISO_IEC_8859_1 (default), 
-ISO_IEC_8859_2, 
-ISO_IEC_8859_3, 
+ISO_IEC_8859_1 (default),
+ISO_IEC_8859_2,
+ISO_IEC_8859_3,
 ISO_IEC_8859_4
 The default one it's the most common one and should work in most situations */
 #define DEFAULTINTENCODING				ISO_IEC_8859_1 		// [default ISO_IEC_8859_1]
@@ -121,13 +121,13 @@ ER3304_1 	(Eastrising) *tested
 /* [DEFAULT EXTERNAL FONT-ROM ENCODING] ++++++++++++++++++++++++++++++++++++++++++++
 Having an external FONT-ROM mean choose the desidered encoding (supported by ROM-CHIP!)
 Possible solutions:
-GB2312, 
-GB12345, 
-BIG5, 
-UNICODE, 
-ASCII, 
-UNIJIS, 
-JIS0208, 
+GB2312,
+GB12345,
+BIG5,
+UNICODE,
+ASCII,
+UNIJIS,
+JIS0208,
 LATIN/GREEK/ARABIC */
 #define	_DFT_RA8875_EXTFONTROMCODING	GB2312 				// [default GB2312]
 
@@ -159,7 +159,7 @@ you have to choose from pin 4,10,52 for CS pin in DUE or you will get an error!
 From here it's better don't touch anithing, everithing has been tuned for maximum speed.
 Only DUE or any AVR 8bit (like uno) can have some troubles with particular old libraries
 because the use of fast port handle, in that case....
-On Arduino DUE and other 8 bit Arduino MCU you can disable the fast CS port 
+On Arduino DUE and other 8 bit Arduino MCU you can disable the fast CS port
 by commenting #define _FASTSSPORT, this will force to use the classic digitalWrite.
 
 */
@@ -184,6 +184,8 @@ DO NOT Exceed 23Mhz for RA8875! It will result in garbage on screen or run very 
 	#elif defined(___DUESTUFF)							 //[DUE]
 		const static uint32_t MAXSPISPEED	= 15000000UL;  // try experiment higher values but NOT over 22000000!
 		//#define _FASTSSPORT
+	#elif defined(SPARK)							 //[Teensy LC] (12 or 24 Mhz max)
+		const static uint32_t MAXSPISPEED	= 12000000UL;	 //default SPI main speed for Photon
 	// TODO: add more CPU here!
 	#else												 //rest of the world (UNO, etc)
 		const static uint32_t MAXSPISPEED	= 10000000UL;  //be careful, higher values result in extremely slow rendering!
@@ -191,7 +193,7 @@ DO NOT Exceed 23Mhz for RA8875! It will result in garbage on screen or run very 
 	#endif
 #else
 // legacy SPI library-------------------------------------------------------------
-	#if defined(ENERGIA) 
+	#if defined(ENERGIA)
 	// LaunchPad, FraunchPad and StellarPad specific
 		#if defined(__TM4C129XNCZAD__) || defined(__TM4C1294NCPDT__)//tiva???
 			#define SPI_SPEED_WRITE 	SPI_CLOCK_DIV4
@@ -221,6 +223,8 @@ DO NOT Exceed 23Mhz for RA8875! It will result in garbage on screen or run very 
 			#define SPI_SPEED_READ 		SPI_CLOCK_DIV8
 			#define SPI_SPEED_SAFE 		SPI_CLOCK_DIV6	//10.5Mhz
 			//#define _FASTSSPORT
+		#elif defined(SPARK)
+			// all defaults are good
 		#else
 		// TODO: Add more CPU here!
 	//rest of the world included UNO, etc.

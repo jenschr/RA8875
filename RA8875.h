@@ -74,7 +74,7 @@ SD MOSI:	pin 11 [shared with RA]
 SD MISO:	pin 12 [shared with RA]
 SD CS:		pin 4  (selectable 3*)
 SD CARD ID: pin xx (selectable and optional)
-*(3) On Teensy3.x not all pin are usable for CS! 
+*(3) On Teensy3.x not all pin are usable for CS!
 can be used: 2,6,9,10,15,20,21,22,23
 -------------------------------------------------------------------------------------
 TFT side	Stellaris (LM4F120XL) module=0 (still not checked)
@@ -84,6 +84,18 @@ SD MOSI:	xxx shared
 SD MISO:	xxx shared
 SD CS:		xxx  (selectable)
 SD CARD ID: pin xx (selectable and optional)
+-------------------------------------------------------------------------------------
+TFT side	Particle Photon / P1
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+SD CLK:   A3
+SD MOSI:	A5
+SD MISO:	A4
+SD CS:		DAC
+SD CARD ID: not tested
+Will not work with the alternate SPI1, only SPI. Remove the content of the fonts
+folder to be able to compile using Particle CLI. Particle Dev or Particle online
+IDE will not work since they don't support nested folders:
+https://github.com/spark/particle-dev-app/issues/6
 -------------------------------------------------------------------------------------
 TFT side	Teensy3 alternative setup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -95,7 +107,7 @@ SD MOSI:	pin 11(normal),pin 7(alt) 	[shared with RA]
 SD MISO:	pin 12(normal),pin 8(alt) 	[shared with RA]
 SD CS:		pin 2  (selectable 3*)
 SD CARD ID: pin xx (selectable and optional)
-*(3) On Teensy3.x not all pin are usable for CS's! 
+*(3) On Teensy3.x not all pin are usable for CS's!
 can be used: 2,6,9,10,15,20,21,22,23
 
 
@@ -139,7 +151,7 @@ CS       10		53           YES       CS
 enum RA8875sizes { 			RA8875_480x272, RA8875_800x480, RA8875_800x480ALT, Adafruit_480x272, Adafruit_800x480 };
 enum RA8875tcursor { 		NOCURSOR=0,IBEAM,UNDER,BLOCK };//0,1,2,3
 enum RA8875tsize { 			X16=0,X24,X32 };//0,1,2
-enum RA8875fontSource { 	INT=0, EXT };//0,1
+enum RA8875fontSource { 	INTERN=0, EXT };//0,1
 enum RA8875fontCoding { 	ISO_IEC_8859_1, ISO_IEC_8859_2, ISO_IEC_8859_3, ISO_IEC_8859_4 };
 enum RA8875extRomType { 	GT21L16T1W, GT21H16T1W, GT23L16U2W, GT30L16U2W, GT30H24T3Y, GT23L24T3Y, GT23L24M1Z, GT23L32S4W, GT30H32S4W, GT30L32S4W, ER3303_1, ER3304_1, ER3301_1 };
 enum RA8875extRomCoding { 	GB2312, GB12345, BIG5, UNICODE, ASCII, UNIJIS, JIS0208, LATIN };
@@ -282,7 +294,7 @@ class RA8875 : public Print {
 	uint8_t 	getFontHeight(boolean inRows=false);
 	//----------FONT -------------------------------------------------------------------------
 	void		setExternalFontRom(enum RA8875extRomType ert, enum RA8875extRomCoding erc,enum RA8875extRomFamily erf=STANDARD);
-	void 		setFont(enum RA8875fontSource s);//INT,EXT (if you have a chip installed)
+	void 		setFont(enum RA8875fontSource s);//INTERN,EXT (if you have a chip installed)
 	//void 		setFont(const struct FONT_DEF *	fnt);
 	void		setFont(const tFont *font);
 	void 		setIntFontCoding(enum RA8875fontCoding f);
@@ -326,7 +338,7 @@ class RA8875 : public Print {
 			_drawArc_helper(cx, cy, radius, thickness, 0, _arcAngle_max, color);
 		} else {
 			_drawArc_helper(cx, cy, radius, thickness, start + (_arcAngle_offset / (float)360)*_arcAngle_max, end + (_arcAngle_offset / (float)360)*_arcAngle_max, color);
-		}	
+		}
 	}
 //-------------- GAUGES ---------------------------------------------------------------------------
 	void 		ringMeter(int val, int minV, int maxV, int16_t x, int16_t y, uint16_t r, const char* units="none", uint16_t colorScheme=4,uint16_t backSegColor=RA8875_BLACK,int16_t angle=150,uint8_t inc=10);
@@ -364,7 +376,7 @@ class RA8875 : public Print {
 	void    	PWMout(uint8_t pw,uint8_t p);//1:backlight, 2:free
 //-------------- ISR ------------------------------------------------------------------------------
 	void		useINT(const uint8_t INTpin=2,const uint8_t INTnum=0);
-	void 		enableISR(bool force = false); 
+	void 		enableISR(bool force = false);
 	void 		setInternalInt(enum RA8875intlist b);//   BTE,TOUCH,DMA,KEY
 	void 		clearInternalInt(enum RA8875intlist b);// BTE,TOUCH,DMA,KEY
 //-------------- TOUCH SCREEN ---------------------------------------------------------------------
@@ -374,7 +386,7 @@ class RA8875 : public Print {
 	uint8_t 	getTouchLimit(void);
 #	if defined(USE_RA8875_TOUCH)
 		//void		useINT(const uint8_t INTpin=2,const uint8_t INTnum=0);
-		//void 		enableISR(bool force = false); 
+		//void 		enableISR(bool force = false);
 		void 		touchBegin(void);//prepare Touch Screen driver
 		void    	touchEnable(boolean enabled);//enable/disable Touch Polling (disable INT)
 		void 		touchReadAdc(uint16_t *x, uint16_t *y);//returns 10bit ADC data (0...1024)
@@ -382,7 +394,7 @@ class RA8875 : public Print {
 		boolean		touchCalibrated(void);//true if screen calibration it's present
 	#elif defined (USE_FT5206_TOUCH)
 		void		useCapINT(const uint8_t INTpin=2,const uint8_t INTnum=0);
-		void 		enableCapISR(bool force = false); 
+		void 		enableCapISR(bool force = false);
 		void	 	updateTS(void);
 		uint8_t 	getGesture(void);
 		uint8_t 	getTouches(void);
@@ -421,7 +433,7 @@ using Print::write;
 	0	->		_extFontRom 		i's using an ext rom font
 	1	->		_autoAdvance		after a char the pointer move ahead
 	2	->		_textWrap
-	3	->		_fontFullAlig		
+	3	->		_fontFullAlig
 	4	->		_fontRotation       (actually not used)
 	5	->		_alignXToCenter;
 	6	->		_alignYToCenter;
@@ -435,7 +447,7 @@ using Print::write;
 	volatile bool				  _needISRrearm;
 	volatile uint8_t			  _enabledInterrups;
 	static void 		 		  _isr(void);
-	
+
 	#if !defined(_AVOID_TOUCHSCREEN)
 		volatile bool			  _touchEnabled;
 		volatile bool			  _clearTInt;
@@ -449,7 +461,7 @@ using Print::write;
 		//volatile bool			  _clearTInt;
 	#endif
 
-	
+
 	#if defined(___TEENSYES)//all of them (32 bit only)
 		uint8_t 				  _cs;
 		uint8_t 				  _miso, _mosi, _sclk;
@@ -520,7 +532,7 @@ using Print::write;
 		uint16_t					_TXTBackColor;
 		bool						_TXTrecoverColor;
 	#endif
-	//text vars-------------------------------------------------		
+	//text vars-------------------------------------------------
 	uint8_t							_FNTspacing;
 	uint8_t							_FNTinterline;
 	enum RA8875extRomFamily 		_EXTFNTfamily;
@@ -548,7 +560,7 @@ using Print::write;
 	int								_angle_offset;
 	// Register containers -----------------------------------------
 	// this needed to  prevent readRegister from chip that it's slow.
-	
+
 	uint8_t			 _DPCR_Reg;  ////Display Configuration		  	  [0x20]
 	uint8_t			 _FNCR0_Reg; //Font Control Register 0 		  	  [0x21]
 	uint8_t			 _FNCR1_Reg; //Font Control Register1 			  [0x22]
@@ -568,7 +580,7 @@ using Print::write;
 	#else
 		void 		_drawChar_unc(int16_t x,int16_t y,int16_t w,const uint8_t *data,uint16_t fcolor,uint16_t bcolor);
 	#endif
-	
+
 	//void 		_drawChar_com(int16_t x,int16_t y,int16_t w,const uint8_t *data);
 	void 		_textPosition(int16_t x, int16_t y,bool update);
 	void 		_setFNTdimensions(uint8_t index);
@@ -580,7 +592,7 @@ using Print::write;
 	void 		_setTextMode(bool m);
 	void 		_scanDirection(boolean invertH,boolean invertV);
 	// 		helpers-----------------------------
-	
+
 	void 		_circle_helper(int16_t x0, int16_t y0, int16_t r, uint16_t color, bool filled);
 	void 		_rect_helper(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color, bool filled);
 	void 		_roundRect_helper(int16_t x, int16_t y, int16_t w, int16_t h, int16_t r, uint16_t color, bool filled);
@@ -594,14 +606,14 @@ using Print::write;
 	#if defined(_RA8875_TXTRNDOPTIMIZER)
 	void 		_charLineRender(bool lineBuffer[],int charW,int16_t x,int16_t y,int16_t currentYposition,uint16_t fcolor);
 	#endif
-	
+
 	//convert a 16bit color(565) into 8bit color(332) as requested by RA8875 datasheet
 	inline __attribute__((always_inline))
 		uint8_t _color16To8bpp(uint16_t color) {
 			return ((color & 0x3800) >> 6 | (color & 0x00E0) >> 3 | (color & 0x0003));
 		}
-		
-	inline __attribute__((always_inline)) 
+
+	inline __attribute__((always_inline))
 		void _checkLimits_helper(int16_t &x,int16_t &y){
 			if (x < 0) x = 0;
 			if (y < 0) y = 0;
@@ -610,8 +622,8 @@ using Print::write;
 			x = x;
 			y = y;
 		}
-		
-	inline __attribute__((always_inline)) 	
+
+	inline __attribute__((always_inline))
 		void _center_helper(int16_t &x, int16_t &y){
 			if (x == CENTER) x = _width/2;
 			if (y == CENTER) y = _height/2;
@@ -635,10 +647,10 @@ using Print::write;
 		#endif
 	#endif
     // Low level access  commands ----------------------
-	inline __attribute__((always_inline)) 
+	inline __attribute__((always_inline))
 	void _startSend(){
 		#if defined(SPI_HAS_TRANSACTION)
-			#if defined(__MKL26Z64__)	
+			#if defined(__MKL26Z64__)
 				_altSPI == true ? SPI1.beginTransaction(SPISettings(_SPImaxSpeed, MSBFIRST, SPI_MODE3)) : SPI.beginTransaction(SPISettings(_SPImaxSpeed, MSBFIRST, SPI_MODE3));
 			#else
 				SPI.beginTransaction(SPISettings(_SPImaxSpeed, MSBFIRST, SPI_MODE3));
@@ -664,8 +676,8 @@ using Print::write;
 			#endif
 		#endif
 	}
-	
-	inline __attribute__((always_inline)) 
+
+	inline __attribute__((always_inline))
 	void _endSend(){
 	#if defined(___TEENSYES)//all of them (32 bit only)
 		digitalWriteFast(_cs, HIGH);
@@ -685,7 +697,7 @@ using Print::write;
 		#endif
 	#endif
 	#if defined(SPI_HAS_TRANSACTION)
-		#if defined(__MKL26Z64__)	
+		#if defined(__MKL26Z64__)
 			_altSPI == true ? SPI1.endTransaction() : SPI.endTransaction();
 		#else
 			SPI.endTransaction();
@@ -693,7 +705,7 @@ using Print::write;
 	#elif !defined(ENERGIA) && !defined(SPI_HAS_TRANSACTION) && !defined(___STM32STUFF)
 		sei();//enable interrupts
 	#endif
-} 
+}
 	void    	_writeRegister(const uint8_t reg, uint8_t val);
 	uint8_t 	_readRegister(const uint8_t reg);
 	void    	_writeData(uint8_t data);
@@ -706,14 +718,14 @@ using Print::write;
 	#endif
 
 #if defined(_FASTCPU)
-inline __attribute__((always_inline)) 
+inline __attribute__((always_inline))
 void _slowDownSPI(bool slow,uint32_t slowSpeed=10000000UL)
 {
 	#if defined(SPI_HAS_TRANSACTION)
 		if (slow){
 			_SPImaxSpeed = slowSpeed;
 		} else {
-			#if defined(__MKL26Z64__)	
+			#if defined(__MKL26Z64__)
 				if (_altSPI){
 					_SPImaxSpeed = MAXSPISPEED2;//TeensyLC max SPI speed on alternate SPI
 				} else {
@@ -756,7 +768,7 @@ void _slowDownSPI(bool slow,uint32_t slowSpeed=10000000UL)
 			//asm volatile("nop");
 			while (!(SPSR & _BV(SPIF)));
 		}
-		
+
 	inline __attribute__((always_inline))
 		uint8_t _spiread(void) {
 			uint8_t r = 0;
