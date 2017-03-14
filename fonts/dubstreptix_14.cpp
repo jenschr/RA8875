@@ -29,11 +29,8 @@
 * ------------------------------------------------------------------------------
 *******************************************************************************/
 
-
-
 #include <stdint.h>
-
-
+#include <./_settings/font.h>
 
 static const uint8_t image_data_dubstreptix_14_0x20[12] __PRGMTAG_  = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
@@ -733,4 +730,3 @@ static const tChar dubstreptix_14_array[] = {
 //num chars, array, width, height, compression
 
 const tFont dubstreptix_14 = { 69, dubstreptix_14_array,0,13,0 };
-

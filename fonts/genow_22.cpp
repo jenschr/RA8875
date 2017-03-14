@@ -29,11 +29,8 @@
 * ------------------------------------------------------------------------------
 *******************************************************************************/
 
-
-
 #include <stdint.h>
-
-
+#include <./_settings/font.h>
 
 static const uint8_t image_data_genow_22_0x20[29] __PRGMTAG_  = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
@@ -993,4 +990,3 @@ static const tChar genow_22_array[] = {
 //num chars, array, width, height, compression
 
 const tFont genow_22 = { 95, genow_22_array,0,21,0 };
-

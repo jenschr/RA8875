@@ -29,11 +29,8 @@
 * ------------------------------------------------------------------------------
 *******************************************************************************/
 
-
-
 #include <stdint.h>
-
-
+#include <./_settings/font.h>
 
 static const uint8_t image_data_bin_22_0x20[18] __PRGMTAG_  = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
@@ -993,4 +990,3 @@ static const tChar bin_22_array[] = {
 //num chars, array, width, height, compression
 
 const tFont bin_22 = { 95, bin_22_array,0,13,0 };
-

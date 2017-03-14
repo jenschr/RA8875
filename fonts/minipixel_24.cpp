@@ -29,11 +29,8 @@
 * ------------------------------------------------------------------------------
 *******************************************************************************/
 
-
-
 #include <stdint.h>
-
-
+#include <./_settings/font.h>
 
 static const uint8_t image_data_minipixel_24_0x20[14] __PRGMTAG_  = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
@@ -993,4 +990,3 @@ static const tChar minipixel_24_array[] = {
 //num chars, array, width, height, compression
 
 const tFont minipixel_24 = { 95, minipixel_24_array,0,16,0 };
-

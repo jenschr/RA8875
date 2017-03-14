@@ -29,11 +29,8 @@
 * ------------------------------------------------------------------------------
 *******************************************************************************/
 
-
-
 #include <stdint.h>
-
-
+#include <./_settings/font.h>
 
 static const uint8_t image_data_orbitron_16_0x20[13] __PRGMTAG_  = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
@@ -993,4 +990,3 @@ static const tChar orbitron_16_array[] = {
 //num chars, array, width, height, compression
 
 const tFont orbitron_16 = { 95, orbitron_16_array,0,20,0 };
-

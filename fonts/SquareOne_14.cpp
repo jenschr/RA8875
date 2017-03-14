@@ -29,11 +29,8 @@
 * ------------------------------------------------------------------------------
 *******************************************************************************/
 
-
-
 #include <stdint.h>
-
-
+#include <./_settings/font.h>
 
 static const uint8_t image_data_SquareOne_14_0x20[16] __PRGMTAG_  = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
@@ -993,4 +990,3 @@ static const tChar SquareOne_14_array[] = {
 //num chars, array, width, height, compression
 
 const tFont SquareOne_14 = { 95, SquareOne_14_array,0,18,0 };
-

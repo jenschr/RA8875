@@ -29,11 +29,8 @@
 * ------------------------------------------------------------------------------
 *******************************************************************************/
 
-
-
 #include <stdint.h>
-
-
+#include <./_settings/font.h>
 
 static const uint8_t image_data_squarefont_14_0x20[6] __PRGMTAG_  = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00
@@ -993,4 +990,3 @@ static const tChar squarefont_14_array[] = {
 //num chars, array, width, height, compression
 
 const tFont squarefont_14 = { 95, squarefont_14_array,0,15,0 };
-
